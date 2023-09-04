@@ -45,7 +45,7 @@ export default {
 
 <template>
   <div id="app">
-    <h1>D&D Scheduler</h1>
+    <h1>D&amp;D Scheduler</h1>
 
     <form id="addAPlayer" v-on:submit.prevent="createPlayer">
       <p><label for="inputPlayer">Name</label></p>
