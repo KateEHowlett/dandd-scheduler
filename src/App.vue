@@ -53,16 +53,14 @@ export default {
       <button class="submitButton">Add Player</button>
     </form>
 
-    <div id="choosePlayer" v-if="players.length">
+    <div v-if="players.length">
       <p>Select your name from the list and update your availability</p>
-      <p>
-        <select v-model="selected">
-          <option></option>
-          <option v-for="player in players" :key="player.id">
-            {{ player.name }}
-          </option>
-        </select>
-      </p>
+      <select v-model="selected">
+        <option></option>
+        <option v-for="player in players" :key="player.id">
+          {{ player.name }}
+        </option>
+      </select>
     </div>
 
     <table v-if="activePlayer">
@@ -126,8 +124,9 @@ export default {
       </tbody>
     </table>
 
-    <div id="checkAvailability" v-if="players.length">
+    <div v-if="players.length">
       <p>Click below to display all player availability</p>
+
       <button
         class="submitButton"
         aria-controls="availability"
@@ -136,6 +135,7 @@ export default {
       >
         Check Availability
       </button>
+
       <div id="availability" v-show="checkSchedule">
         <div class="displayPlayers" v-for="player in players" :key="player.id">
           <div style="text-align: center">{{ player.name }}</div>
