@@ -1,13 +1,5 @@
-body {
-  /**background-color: rgba(180, 67, 108, 0.96)*/
-  font-family: "Signika", serif;
-}
+@import "./base.css";
 
-h1 {
-  color: #4281a4;
-  font-family: "Roboto Slab", serif;
-  text-align: center;
-}
 
 #addAPlayer {
   text-align: center;
