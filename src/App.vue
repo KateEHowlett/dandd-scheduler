@@ -55,12 +55,15 @@ export default {
 
     <div v-if="players.length">
       <p>Select your name from the list and update your availability</p>
-      <select v-model="selected">
-        <option></option>
-        <option v-for="player in players" :key="player.id">
-          {{ player.name }}
-        </option>
-      </select>
+      <p>
+        <label for="player">Player:</label>&nbsp;
+        <select id="player" v-model="selected">
+          <option></option>
+          <option v-for="player in players" :key="player.id">
+            {{ player.name }}
+          </option>
+        </select>
+      </p>
     </div>
 
     <table v-if="activePlayer">
@@ -147,6 +150,7 @@ export default {
             <div :class="{ [availability]: true }">
               <select
                 class="availabilityOptions"
+                :aria-label="`${player.name} - ${day}`"
                 v-model="player.availability[day]"
               >
                 <option value="unknown">Unknown</option>
