@@ -1,51 +1,131 @@
-<head>
-  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Signika">
-</head>
-<h1>D&D Scheduler</h1>
-<div id="scheduling">
-<div id="addAPlayer">
-  <p>Put in your name below</p>
-  <input id="inputPlayer" v-model="playerName" v-on:keydown.enter="createPlayer" /><button id="submitButton" v-on:click="createPlayer">Add Player</button>
-</div>
-<div id="choosePlayer">
-<p>Select your name from the list and update your availability</p>
-  <p><select v-model="selected">
-    <option v-for="player in players">{{player.name}}</option>
-  </select></p>
-</div>
-    <div id="availability">
-      <div id="submitDates">
-      <div id="day" v-for="day in daysOfTheWeek">
-        <table>
-          <th>{{day.name}}</th>
-          <tr><td><input :name="day.name" id="day.available" v-model="day.available" value="true" :disabled="!selected" type="radio">Available</td></tr>
-          <tr><td><input :name="day.name" id="day.tentative" v-model="day.tentative" value="true" :disabled="!selected" type="radio">Tentative</td></tr>
-          <tr><td><input :name="day.name" id="day.busy" v-model="day.busy" value="true" :disabled="!selected" type="radio">Busy</td></tr>
-        </table>
-  </div>
-  </div>
-      <button id="submitButton" v-on:click="submitAvailability">Submit</button>
-    </div>
-<div id="checkAvailability">
-<p>Click below to display all player availability</p>
-  <button id="submitButton" v-on:click="checkAvailability">Check Availability</button>
-  <div id="availability" v-show="checkSchedule">
-  <div id="displayPlayers" v-for="(player,number) in players" ref="individuals">
-    <!-- Where 'availability' is the 'value' e.g. 'tentative' and 'day' is the 'key' e.g. 'Monday0' -->
-    <div id="displayAvailability" v-for="(availability, day, index) in player" :key="player.name + index" ref="days">
-      <div :id="'listItem'+index+1" :class=" {available:availability==='available', tentative:availability==='tentative', busy:availability==='busy', session:availability==='session',unknown:availability==='Unknown'}" :key="index">
-        <select id="availabilityOptions" @change="updateColour($event,index,player,number)" >
-          <option>{{availability}}</option>
-          <option v-model="selection">Available</option>
-          <option v-model="selection">Busy</option>
-          <option v-model="selection">Tentative</option>
-          <option v-model="selection">Session</option>
-        </select>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D&amp;D Scheduler</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto+Slab"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Signika"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>D&amp;D Scheduler</h1>
+    <div id="scheduling">
+      <div id="addAPlayer">
+        <p>Put in your name below</p>
+        <input
+          id="inputPlayer"
+          v-model="playerName"
+          v-on:keydown.enter="createPlayer"
+        />
+        <button id="submitButton" v-on:click="createPlayer">Add Player</button>
+      </div>
+      <div id="choosePlayer">
+        <p>Select your name from the list and update your availability</p>
+        <p>
+          <select v-model="selected">
+            <option v-for="player in players">{{ player.name }}</option>
+          </select>
+        </p>
+      </div>
+      <div id="availability">
+        <div id="submitDates">
+          <div id="day" v-for="day in daysOfTheWeek">
+            <table>
+              <th>{{ day.name }}</th>
+              <tr>
+                <td>
+                  <input
+                    :name="day.name"
+                    id="day.available"
+                    v-model="day.available"
+                    value="true"
+                    :disabled="!selected"
+                    type="radio"
+                  />Available
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    :name="day.name"
+                    id="day.tentative"
+                    v-model="day.tentative"
+                    value="true"
+                    :disabled="!selected"
+                    type="radio"
+                  />Tentative
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    :name="day.name"
+                    id="day.busy"
+                    v-model="day.busy"
+                    value="true"
+                    :disabled="!selected"
+                    type="radio"
+                  />Busy
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <button id="submitButton" v-on:click="submitAvailability">
+          Submit
+        </button>
+      </div>
+      <div id="checkAvailability">
+        <p>Click below to display all player availability</p>
+        <button id="submitButton" v-on:click="checkAvailability">
+          Check Availability
+        </button>
+        <div id="availability" v-show="checkSchedule">
+          <div
+            id="displayPlayers"
+            v-for="(player, number) in players"
+            ref="individuals"
+          >
+            <!-- Where 'availability' is the 'value' e.g. 'tentative' and 'day' is the 'key' e.g. 'Monday0' -->
+            <div
+              id="displayAvailability"
+              v-for="(availability, day, index) in player"
+              :key="player.name + index"
+              ref="days"
+            >
+              <div
+                :id="'listItem' + index + 1"
+                :class="{ available: availability === 'available', tentative: availability === 'tentative', busy: availability === 'busy', session: availability === 'session', unknown: availability === 'Unknown' }"
+                :key="index"
+              >
+                <select
+                  id="availabilityOptions"
+                  @change="updateColour($event, index, player, number)"
+                >
+                  <option>{{ availability }}</option>
+                  <option v-model="selection">Available</option>
+                  <option v-model="selection">Busy</option>
+                  <option v-model="selection">Tentative</option>
+                  <option v-model="selection">Session</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-</div>
-</div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.min.js"
+      integrity="sha256-1gHyKSR7Jh0YGBmI9zN7P2UhZRh/PCKhCYIaUOqWoPk="
+      crossorigin="anonymous"
+    ></script>
+    <script src="index.js"></script>
+  </body>
+</html>
