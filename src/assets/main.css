@@ -1,11 +1,7 @@
 @import "./base.css";
 
-
 #addAPlayer {
   text-align: center;
-}
-#submitDates {
-  display: flex;
 }
 
 #inputPlayer {
@@ -19,7 +15,7 @@
   outline: none;
 }
 
-#submitButton {
+.submitButton {
   margin: 2px;
   background-color: white;
   color: #4281a4;
@@ -30,15 +26,10 @@
   font-size: 1em;
 }
 
-#submitButton:hover {
+.submitButton:hover {
   background-color: #4281a4;
   color: white;
   border-color: white;
-}
-
-#day {
-  border-width: 1px;
-  border-color: tomato;
 }
 
 #availability {
@@ -46,18 +37,19 @@
   padding: 2px;
 }
 
-#displayPlayers {
+.displayPlayers {
   padding: 2px;
   border: 1px;
   border-color: white;
 }
 
-#displayAvailability {
+.displayAvailability {
   padding: 4px;
   margin: 1px;
   text-align: center;
   font-family: "Signika";
 }
+
 .available {
   background-color: rgba(95, 173, 86);
 }
@@ -94,28 +86,28 @@
   background-color: #c25b80
 }
 
-#availabilityOptions {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background: none;
-    border: none;
-    text-align: center;
-    padding: 4px;
-    margin: 2px;
-    transition: border-color .1s ease-in-out,box-shadow .1s ease-in-out;
+.availabilityOptions {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: none;
+  border: none;
+  text-align: center;
+  padding: 4px;
+  margin: 2px;
+  transition: border-color .1s ease-in-out, box-shadow .1s ease-in-out;
   font-family: "Signika";
 }
 
-#availabilityOptions:focus {
-    outline: none;
-    border: none;
-    text-align: center;
-    padding: 4px;
-    margin: 2px;
+.availabilityOptions:focus {
+  outline: none;
+  border: none;
+  text-align: center;
+  padding: 4px;
+  margin: 2px;
   font-family: "Signika";
 }
 
 select::-ms-expand {
-    display:none;
+  display: none;
 }
